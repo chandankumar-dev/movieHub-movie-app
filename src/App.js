@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
 
-function App() {
+import Header from "./components/Header";
+import MovieList from "./components/MovieList";
+import Search from "./components/Search";
+
+export default function App() {
+  const [movieData, setMovieData] = useState([]);
+  const [searchValue, setSearchValue] = useState("Naruto");
+
+  const getMovieRequest = async (searchValue) => {
+    const apiKey = "2e3cc626";
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=${apiKey}`;
+    //http://www.omdbapi.com/?t=Game of Thrones&Season=1&Episode=1&apikey=${apiKey}
+
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    console.log(responseJson);
+    setMovieData(responseJson);
+  };
+
+  useEffect(() => {
+    getMovieRequest(searchValue);
+  }, [searchValue]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+      <MovieList movieData={movieData.Search} />
     </div>
   );
 }
-
-export default App;
