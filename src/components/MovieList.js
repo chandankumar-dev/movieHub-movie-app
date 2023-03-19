@@ -10,7 +10,12 @@ export default function MovieList(props) {
             className="flex flex-col justify-center items-center m-5"
           >
             <img src={movie.Poster} alt={movie.Title} className="h-60 w-52" />
-            <p className="text-center mt-1">{movie.Title}</p>
+            <p className="text-center mt-1">
+              <span className="font-bold italic">Title</span> - {movie.Title}
+            </p>
+            <p className="text-center">
+              <span className="font-bold italic">Year</span> - {movie.Year}
+            </p>
           </div>
         );
       })}
